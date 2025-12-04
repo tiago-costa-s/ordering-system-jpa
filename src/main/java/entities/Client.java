@@ -2,6 +2,7 @@ package entities;
 
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,9 +13,17 @@ public class Client {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@Column(nullable = false)
 	private Boolean active;
+
+	@Column(nullable = false)
 	private String name;
+
+	@Column(nullable = false)
 	private String phone;
+
+	@Column(nullable = false)
 	private String email;
 
 	public Client() {
@@ -23,7 +32,7 @@ public class Client {
 
 	public Client(Boolean active, String name, String phone, String email) {
 		super();
-		setActive(active);
+		setActive(this.active = (active != null ? active : true));
 		setName(name);
 		setPhone(phone);
 		setEmail(email);
@@ -62,11 +71,13 @@ public class Client {
 			throw new IllegalArgumentException("O telefone não pode estar vazio.");
 		}
 
-		this.phone = phone.replaceAll("\\D", "");
+		phone = phone.replaceAll("\\D", "");
 
 		if (phone.length() < 10 || phone.length() > 11) {
 			throw new IllegalArgumentException("O telefone deve conter 10 ou 11 dígitos numéricos.");
 		}
+
+		this.phone = phone;
 	}
 
 	public String getEmail() {
