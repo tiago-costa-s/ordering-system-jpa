@@ -1,8 +1,10 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,32 +16,37 @@ public class Manufacturer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@Column(nullable = false)
 	private Boolean active;
+
+	@Column(nullable = false)
 	private String name;
+
+	@Column(nullable = false, unique = true, length = 14)
 	private String cnpj;
+
+	@Column(nullable = false)
 	private String phone;
 
 	@OneToMany(mappedBy = "manufacturer")
-	List<Product> products;
+	List<Product> products = new ArrayList<>();
 
 	public Manufacturer() {
 		super();
+		this.active = true;
 	}
 
 	public Manufacturer(Boolean active, String name, String cnpj, String phone) {
 		super();
-		this.active = active;
-		this.name = name;
-		this.cnpj = cnpj;
-		this.phone = phone;
+		this.active = (active != null ? active : true);
+		setName(name);
+		setCnpj(cnpj);
+		setPhone(phone);
 	}
 
 	public Long getId() {
 		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public Boolean getActive() {
@@ -60,7 +67,7 @@ public class Manufacturer {
 	public void setName(String name) {
 
 		if (name == null || name.trim().isEmpty()) {
-			throw new IllegalArgumentException("O nome do fornercedor não pode estar vazio.");
+			throw new IllegalArgumentException("O nome do fornecedor não pode estar vazio.");
 		}
 
 		this.name = name.replaceAll("[^a-zA-ZÀ-ÿ\\s]", "");
@@ -74,7 +81,14 @@ public class Manufacturer {
 		if (cnpj == null || cnpj.trim().isEmpty()) {
 			throw new IllegalArgumentException("O cnpj não pode estar vazio.");
 		}
-		this.cnpj = cnpj.replaceAll("\\D", "");
+
+		cnpj = cnpj.replaceAll("\\D", "");
+
+		if (cnpj.length() != 14) {
+			throw new IllegalArgumentException("O CNPJ deve conter 14 dígitos numéricos.");
+		}
+
+		this.cnpj = cnpj;
 	}
 
 	public String getPhone() {
