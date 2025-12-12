@@ -35,7 +35,7 @@ public class ClientDAO {
 		try {
 			client = em.find(Client.class, id);
 		} catch (Exception e) {
-			System.out.println("Erro ao buscar o cliente: com ID:  " + id + ": " + e.getMessage());
+			System.out.println("Erro ao buscar o cliente: com ID: " + id + ": " + e.getMessage());
 		} finally {
 			em.close();
 		}
@@ -49,7 +49,7 @@ public class ClientDAO {
 		try {
 			clientList = em.createQuery("SELECT c FROM Client c", Client.class).getResultList();
 		} catch (Exception e) {
-			System.out.println("Erro ao buscar clientes: " + e.getMessage());
+			System.out.println("Erro ao buscar clientes:" + e.getMessage());
 		} finally {
 			em.close();
 		}

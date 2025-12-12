@@ -1,8 +1,10 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,13 +16,18 @@ public class Category {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@Column(nullable = false)
 	private Boolean active;
+
+	@Column(nullable = false)
 	private String name;
 
 	@OneToMany(mappedBy = "category")
-	private List<Product> products;
+	private List<Product> products = new ArrayList<>();
 
 	public Category() {
+		super();
 		this.active = true;
 	}
 
@@ -30,16 +37,12 @@ public class Category {
 
 	public Category(Boolean active, String name) {
 		super();
-		setActive(active);
+		this.active = (active != null ? active : true);	
 		setName(name);
 	}
 
 	public Long getId() {
 		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public Boolean getActive() {
@@ -72,7 +75,7 @@ public class Category {
 
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", active=" + active + ", name=" + name +"]";
+		return "Category [id=" + id + ", active=" + active + ", name=" + name + "]";
 	}
 
 	@Override

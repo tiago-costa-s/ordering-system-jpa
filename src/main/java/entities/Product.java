@@ -2,6 +2,7 @@ package entities;
 
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,9 +16,17 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Boolean active;
+
+	@Column(nullable = false)
 	private String name;
+
+	@Column(nullable = false)
 	private Double price;
+
+	@Column(nullable = false)
 	private Integer stock;
+
+	@Column(nullable = false)
 	private String description;
 
 	@ManyToOne
@@ -35,7 +44,7 @@ public class Product {
 	public Product(Boolean active, String name, Double price, Integer stock, String description,
 			Manufacturer manufacturer, Category category) {
 		super();
-		setActive(active);
+		this.active = (active != null ? active : true);
 		setName(name);
 		setPrice(price);
 		setStock(stock);

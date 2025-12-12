@@ -27,7 +27,6 @@ public class ProductDAO {
 	}
 
 	// ----------------- READ -----------------
-
 	public Product findProduct(Long id) {
 		EntityManager em = JPAUtil.getEntityManager();
 		Product product = null;

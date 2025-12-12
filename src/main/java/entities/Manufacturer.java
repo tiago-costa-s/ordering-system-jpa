@@ -30,7 +30,7 @@ public class Manufacturer {
 	private String phone;
 
 	@OneToMany(mappedBy = "manufacturer")
-	List<Product> products = new ArrayList<>();
+	List<Product> products;
 
 	public Manufacturer() {
 		super();
@@ -70,7 +70,7 @@ public class Manufacturer {
 			throw new IllegalArgumentException("O nome do fornecedor não pode estar vazio.");
 		}
 
-		this.name = name.replaceAll("[^a-zA-ZÀ-ÿ\\s]", "");
+		this.name = name;
 	}
 
 	public String getCnpj() {
