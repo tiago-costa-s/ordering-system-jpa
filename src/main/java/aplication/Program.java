@@ -117,7 +117,7 @@ public class Program {
 //		BUSCAR CATEGORIA
 		CategoryDAO cd = new CategoryDAO();
 		Category c = new Category();
-		List<Category> cList = cd.findCategories();
+		List<Category> cList = cd.findByCategories();
 		
 //		BUSCAR CATEGORIAS
 //		c.setName("Eletrodomestico");
