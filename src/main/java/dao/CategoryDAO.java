@@ -4,6 +4,7 @@ import java.util.List;
 
 import entities.Category;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import util.JPAUtil;
 
 public class CategoryDAO {
@@ -66,7 +67,9 @@ public class CategoryDAO {
 		try {
 			category = em.createQuery("SELECT c FROM Category c WHERE c.name  = :name", Category.class)
 					.setParameter("name", name).getSingleResult();
-		} catch (Exception e) {
+		} catch(NoResultException e){
+			category = null;
+		}catch (Exception e) {
 			System.out.println("Erro ao buscar categoria pelo nome: " + e.getMessage());
 		} finally {
 			em.close();

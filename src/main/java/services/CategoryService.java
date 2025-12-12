@@ -9,19 +9,15 @@ public class CategoryService {
 
 		CategoryDAO categoryDAO = new CategoryDAO();
 
-		Category categoryValidate = categoryDAO.findCategory(category.getId());
-		
-		if(categoryValidate.getName().equals(category)){
+		Category categoryValidate = categoryDAO.findByName(category.getName());
+
+		if (categoryValidate.getName().equals(category.getName())) {
 			throw new IllegalArgumentException("já existe uma categoria com esse nome.");
 		}
 
 		if (category.getName() == null) {
 			throw new IllegalArgumentException("O nome não pode ser nulo");
 		}
-
-		if (category.getName()) {
-		}
-
 	}
 
 	public Category findCategory(Long id) {
