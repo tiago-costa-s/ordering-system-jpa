@@ -5,19 +5,21 @@ import entities.Category;
 
 public class CategoryService {
 
-	public void createCategory(Category category) {
+	public void createCategory(Category newCategory) {
+
+		if (newCategory == null) {
+			throw new IllegalArgumentException("Categoria não pode ser nula.");
+		}
 
 		CategoryDAO categoryDAO = new CategoryDAO();
 
-		Category categoryValidate = categoryDAO.findByName(category.getName());
+		Category categoryValidate = categoryDAO.findByName(newCategory.getName());
 
-		if (categoryValidate.getName().equals(category.getName())) {
+		if (categoryValidate != null) {
 			throw new IllegalArgumentException("já existe uma categoria com esse nome.");
 		}
 
-		if (category.getName() == null) {
-			throw new IllegalArgumentException("O nome não pode ser nulo");
-		}
+		categoryDAO.insertCategory(newCategory);
 	}
 
 	public Category findCategory(Long id) {
