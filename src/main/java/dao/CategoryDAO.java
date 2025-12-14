@@ -85,11 +85,7 @@ public class CategoryDAO {
 
 		try {
 			em.getTransaction().begin();
-			category = em.find(Category.class, id);
-
-			if (category == null) {
-				throw new IllegalArgumentException("Categoria não informada para o ID: " + id);
-			}
+			category = em.find(Category.class, id);			
 
 			if (newData.getActive() != null) {
 				category.setActive(newData.getActive());
