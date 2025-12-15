@@ -10,7 +10,7 @@ import util.JPAUtil;
 public class CategoryDAO {
 	// ----------------- CREATE -----------------
 	public Category insertCategory(Category category) {
-		
+
 		EntityManager em = JPAUtil.getEntityManager();
 
 		try {
@@ -32,7 +32,7 @@ public class CategoryDAO {
 
 	// ----------------- READ -----------------
 	public Category findByCategory(Long id) {
-		
+
 		EntityManager em = JPAUtil.getEntityManager();
 		Category category = null;
 
@@ -48,7 +48,7 @@ public class CategoryDAO {
 	}
 
 	public List<Category> findByCategories() {
-		
+
 		EntityManager em = JPAUtil.getEntityManager();
 		List<Category> categoryList = null;
 
@@ -64,7 +64,7 @@ public class CategoryDAO {
 	}
 
 	public Category findByName(String name) {
-		
+
 		EntityManager em = JPAUtil.getEntityManager();
 		Category category = null;
 
@@ -84,7 +84,7 @@ public class CategoryDAO {
 
 	// ----------------- UPDATE -----------------
 	public Category updateCategory(Long id, Category newData) {
-		
+
 		EntityManager em = JPAUtil.getEntityManager();
 		Category category = null;
 
@@ -112,24 +112,5 @@ public class CategoryDAO {
 		}
 
 		return category;
-	}
-
-	// ----------------- DELETE -----------------
-	public void deleteCategory(Long id) {
-		
-		EntityManager em = JPAUtil.getEntityManager();
-		Category category = em.find(Category.class, id);
-
-		try {
-			em.getTransaction().begin();
-			em.remove(category);
-			em.getTransaction().commit();
-			System.out.println("Categoria removida com sucesso.");
-		} catch (Exception e) {
-			em.getTransaction().rollback();
-			System.out.println("Erro ao remover a categoria:  " + e.getMessage());
-		} finally {
-			em.close();
-		}
 	}
 }
