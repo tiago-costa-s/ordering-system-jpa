@@ -6,6 +6,7 @@ import dao.CategoryDAO;
 import entities.Category;
 
 public class CategoryService {
+
 	CategoryDAO categoryDAO = new CategoryDAO();
 
 	public void createCategory(Category newCategory) {
@@ -24,6 +25,7 @@ public class CategoryService {
 	}
 
 	public Category findCategory(Long id) {
+
 		if (id == null) {
 			throw new IllegalArgumentException("O id da categoria não pode ser nulo.");
 		}
@@ -37,7 +39,8 @@ public class CategoryService {
 		return category;
 	}
 
-	public List<Category> findCategories() {
+	public List<Category> findByCategories() {
+
 		List<Category> listCategories = null;
 
 		listCategories = categoryDAO.findByCategories();
@@ -56,7 +59,7 @@ public class CategoryService {
 		}
 
 		if (newData == null) {
-			throw new IllegalArgumentException("Dados para atualização nã pdem ser nulos.");
+			throw new IllegalArgumentException("Dados para atualização não podem ser nulos.");
 		}
 
 		Category category = categoryDAO.findByCategory(id);
@@ -73,5 +76,29 @@ public class CategoryService {
 	}
 
 	public void deleteCategory(Long id) {
+
+		if (id == null) {
+			throw new IllegalArgumentException("O id não pode ser nulo.");
+		}
+
+		Category category = categoryDAO.findByCategory(id);
+
+		if (category == null) {
+			throw new IllegalArgumentException("Categoria não encontrada para o ID: " + id);
+		}
+
+		if (category.getActive() != true) {
+			throw new IllegalArgumentException("Categoria ja esta inativa.");
+		}
+
+		if (category.getProducts().isEmpty()) {
+			throw new IllegalArgumentException();
+		}
+
+		categoryDAO.deleteCategory(id);
+
+		category.setActive(false);
+		
+		categoryDAO.updateCategory(id, category);
 	}
 }

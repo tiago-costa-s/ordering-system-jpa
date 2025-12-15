@@ -37,7 +37,7 @@ public class Category {
 
 	public Category(Boolean active, String name) {
 		super();
-		this.active = (active != null ? active : true);	
+		this.active = (active != null ? active : true);
 		setName(name);
 	}
 

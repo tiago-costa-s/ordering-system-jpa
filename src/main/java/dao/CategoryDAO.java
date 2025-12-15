@@ -10,6 +10,7 @@ import util.JPAUtil;
 public class CategoryDAO {
 	// ----------------- CREATE -----------------
 	public Category insertCategory(Category category) {
+		
 		EntityManager em = JPAUtil.getEntityManager();
 
 		try {
@@ -31,6 +32,7 @@ public class CategoryDAO {
 
 	// ----------------- READ -----------------
 	public Category findByCategory(Long id) {
+		
 		EntityManager em = JPAUtil.getEntityManager();
 		Category category = null;
 
@@ -46,6 +48,7 @@ public class CategoryDAO {
 	}
 
 	public List<Category> findByCategories() {
+		
 		EntityManager em = JPAUtil.getEntityManager();
 		List<Category> categoryList = null;
 
@@ -61,6 +64,7 @@ public class CategoryDAO {
 	}
 
 	public Category findByName(String name) {
+		
 		EntityManager em = JPAUtil.getEntityManager();
 		Category category = null;
 
@@ -80,12 +84,13 @@ public class CategoryDAO {
 
 	// ----------------- UPDATE -----------------
 	public Category updateCategory(Long id, Category newData) {
+		
 		EntityManager em = JPAUtil.getEntityManager();
 		Category category = null;
 
 		try {
 			em.getTransaction().begin();
-			category = em.find(Category.class, id);			
+			category = em.find(Category.class, id);
 
 			if (newData.getActive() != null) {
 				category.setActive(newData.getActive());
@@ -111,12 +116,9 @@ public class CategoryDAO {
 
 	// ----------------- DELETE -----------------
 	public void deleteCategory(Long id) {
+		
 		EntityManager em = JPAUtil.getEntityManager();
 		Category category = em.find(Category.class, id);
-
-		if (category == null) {
-			throw new IllegalArgumentException("Categoria não informada para o ID: " + id);
-		}
 
 		try {
 			em.getTransaction().begin();
