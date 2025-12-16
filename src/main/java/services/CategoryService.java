@@ -91,14 +91,12 @@ public class CategoryService {
 			throw new IllegalArgumentException("Categoria ja esta inativa.");
 		}
 
-		if (category.getProducts().isEmpty()) {
-			throw new IllegalArgumentException();
+		if (!category.getProducts().isEmpty()) {
+			throw new IllegalArgumentException("Categoria não pode ser removida pois possui produto(s) associado(s).");
 		}
 
-		categoryDAO.deleteCategory(id);
-
 		category.setActive(false);
-		
+
 		categoryDAO.updateCategory(id, category);
 	}
 }

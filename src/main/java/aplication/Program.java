@@ -132,6 +132,6 @@ public class Program {
 //		c.setName("Eletronico");
 //		cd.updateCategory(1L, c);
 		
-		cd.deleteCategory(2L);
+		
 	}
 }
