@@ -28,7 +28,7 @@ public class CategoryService {
 		categoryDAO.insertCategory(newCategory);
 	}
 
-	public Category findCategory(Long id) {
+	public Category findCategoryById(Long id) {
 
 		if (id == null) {
 			throw new IllegalArgumentException("O id da categoria não pode ser nulo.");
