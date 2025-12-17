@@ -31,7 +31,7 @@ public class CategoryDAO {
 	}
 
 	// ----------------- READ -----------------
-	public Category findByCategory(Long id) {
+	public Category findById(Long id) {
 
 		EntityManager em = JPAUtil.getEntityManager();
 		Category category = null;
@@ -47,7 +47,7 @@ public class CategoryDAO {
 		return category;
 	}
 
-	public List<Category> findByCategories() {
+	public List<Category> findAll() {
 
 		EntityManager em = JPAUtil.getEntityManager();
 		List<Category> categoryList = null;

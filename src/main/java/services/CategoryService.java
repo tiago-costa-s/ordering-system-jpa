@@ -7,7 +7,7 @@ import entities.Category;
 
 public class CategoryService {
 
-	CategoryDAO categoryDAO = new CategoryDAO();
+	private final CategoryDAO categoryDAO = new CategoryDAO();
 
 	public void createCategory(Category newCategory) {
 
@@ -30,7 +30,7 @@ public class CategoryService {
 			throw new IllegalArgumentException("O id da categoria não pode ser nulo.");
 		}
 
-		Category category = categoryDAO.findByCategory(id);
+		Category category = categoryDAO.findById(id);
 
 		if (category == null) {
 			throw new IllegalArgumentException("Categoria não encontrada para o ID: " + id);
@@ -43,7 +43,7 @@ public class CategoryService {
 
 		List<Category> listCategories = null;
 
-		listCategories = categoryDAO.findByCategories();
+		listCategories = categoryDAO.findAll();
 
 		if (listCategories.isEmpty()) {
 			throw new IllegalArgumentException("Categorias não encotradas. ");
@@ -62,7 +62,7 @@ public class CategoryService {
 			throw new IllegalArgumentException("Dados para atualização não podem ser nulos.");
 		}
 
-		Category category = categoryDAO.findByCategory(id);
+		Category category = categoryDAO.findById(id);
 
 		if (category == null) {
 			throw new IllegalArgumentException("Categoria não encontrada para o ID: " + id);
@@ -81,7 +81,7 @@ public class CategoryService {
 			throw new IllegalArgumentException("O id não pode ser nulo.");
 		}
 
-		Category category = categoryDAO.findByCategory(id);
+		Category category = categoryDAO.findById(id);
 
 		if (category == null) {
 			throw new IllegalArgumentException("Categoria não encontrada para o ID: " + id);

@@ -57,6 +57,7 @@ public class Manufacturer {
 		if (active == null) {
 			throw new IllegalArgumentException("O status ativo não pode ser nulo");
 		}
+		
 		this.active = active;
 	}
 
