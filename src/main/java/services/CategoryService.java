@@ -43,15 +43,9 @@ public class CategoryService {
 		return category;
 	}
 
-	public List<Category> findByCategories() {
+	public List<Category> findAllCategories() {
 
-		List<Category> listCategories = null;
-
-		listCategories = categoryDAO.findAll();
-
-		if (listCategories.isEmpty()) {
-			throw new IllegalArgumentException("Categorias não encotradas. ");
-		}
+		List<Category> listCategories = categoryDAO.findAll();
 
 		return listCategories;
 	}
