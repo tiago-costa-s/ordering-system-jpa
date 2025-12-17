@@ -1,5 +1,7 @@
 package services;
 
+import java.util.List;
+
 import dao.ManufacturerDAO;
 import entities.Manufacturer;
 
@@ -26,7 +28,7 @@ public class ManufacturerService {
 		manufacturerDAO.insertManufacturer(newManufacturer);
 	}
 
-	public Manufacturer findManufacturer(Long id) {
+	public Manufacturer findManufacturerById(Long id) {
 
 		if (id == null) {
 			throw new IllegalArgumentException("O id do faricante não pode ser nulo");
@@ -39,6 +41,13 @@ public class ManufacturerService {
 		}
 
 		return manufacturer;
+	}
+
+	public List<Manufacturer> findAllManufacturers() {
+
+		List<Manufacturer> manufacturers = manufacturerDAO.findAll();
+
+		return manufacturers;
 	}
 
 }
