@@ -117,8 +117,8 @@ public class Program {
 //		BUSCAR CATEGORIA
 		CategoryDAO cd = new CategoryDAO();
 		Category c = new Category();
-		List<Category> cList = cd.findByCategories();
-		
+		List<Category> cList = cd.findAll();
+
 //		BUSCAR CATEGORIAS
 //		c.setName("Eletrodomestico");
 //		c.setActive(true);
@@ -126,12 +126,11 @@ public class Program {
 //		for(Category cat : cList) {
 //			System.out.println(cat);
 //		}
-		
+
 //		ATUALIZAR CATEGORIAS
-		
+
 //		c.setName("Eletronico");
 //		cd.updateCategory(1L, c);
-		
-		
+
 	}
 }

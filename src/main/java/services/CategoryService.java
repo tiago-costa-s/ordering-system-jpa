@@ -15,6 +15,10 @@ public class CategoryService {
 			throw new IllegalArgumentException("Categoria não pode ser nula.");
 		}
 
+		if (newCategory.getName() == null || newCategory.getName().trim().isEmpty()) {
+			throw new IllegalArgumentException("O nome da categoria é obrigatório.");
+		}
+
 		Category categoryValidate = categoryDAO.findByName(newCategory.getName());
 
 		if (categoryValidate != null) {

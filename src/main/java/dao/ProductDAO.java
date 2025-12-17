@@ -27,7 +27,7 @@ public class ProductDAO {
 	}
 
 	// ----------------- READ -----------------
-	public Product findProduct(Long id) {
+	public Product findById(Long id) {
 		EntityManager em = JPAUtil.getEntityManager();
 		Product product = null;
 
@@ -52,7 +52,7 @@ public class ProductDAO {
 		return product;
 	}
 
-	public List<Product> findProducts() {
+	public List<Product> findAll() {
 		EntityManager em = JPAUtil.getEntityManager();
 		List<Product> productsList = null;
 
