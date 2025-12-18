@@ -56,7 +56,37 @@ public class ManufacturerService {
 			throw new IllegalArgumentException("O nome não pode ser nulo.");
 		}
 
-		return manufacturerDAO.findByName(name)
-	
+		return manufacturerDAO.findByName(name);
+	}
+
+	public void updateManufacturer(Long id, Manufacturer newData) {
+
+		if (id == null) {
+			throw new IllegalArgumentException("O id não pode ser nulo.");
+		}
+
+		if (newData == null) {
+			throw new IllegalArgumentException("Dados para atualização não podem ser nulos.");
+		}
+
+		Manufacturer manufacturer = manufacturerDAO.findById(id);
+
+		if (manufacturer == null) {
+			throw new IllegalArgumentException("Fornecedor não encontrada para o ID: " + id);
+		}
+
+		if (newData.getName() != null) {
+			manufacturer.setName(newData.getName());
+		}
+
+		if (newData.getCnpj() != null) {
+			manufacturer.setCnpj(newData.getCnpj());
+		}
+		
+		if(newData.getPhone() != null){
+			manufacturer.setPhone(newData.getPhone());
+		}
+		
+		manufacturerDAO.updateManufacturer(id, manufacturer);
 	}
 }
