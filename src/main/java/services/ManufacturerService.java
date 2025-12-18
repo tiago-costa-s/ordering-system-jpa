@@ -50,4 +50,13 @@ public class ManufacturerService {
 		return manufacturers;
 	}
 
+	public Manufacturer findManufacturerByName(String name) {
+
+		if (name == null || name.trim().isEmpty()) {
+			throw new IllegalArgumentException("O nome não pode ser nulo.");
+		}
+
+		return manufacturerDAO.findByName(name)
+	
+	}
 }

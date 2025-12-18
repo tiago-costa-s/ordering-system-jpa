@@ -70,7 +70,6 @@ public class ManufacturerDAO {
 		Manufacturer manufacturer = null;
 
 		try {
-
 			manufacturer = em.createQuery("SELECT m FROM manufacturer m WHERE m.name = :name", Manufacturer.class)
 					.setParameter("name", name).getSingleResult();
 		} catch (NoResultException e) {
