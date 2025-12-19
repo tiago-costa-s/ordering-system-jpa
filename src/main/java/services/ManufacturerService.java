@@ -12,7 +12,7 @@ public class ManufacturerService {
 	public void createManufacturer(Manufacturer newManufacturer) {
 
 		if (newManufacturer == null) {
-			throw new IllegalArgumentException("Fornecedor não pode ser nulo");
+			throw new IllegalArgumentException("Fabricante não pode ser nulo");
 		}
 
 		if (newManufacturer.getName() == null || newManufacturer.getName().trim().isEmpty()) {
@@ -22,7 +22,7 @@ public class ManufacturerService {
 		Manufacturer manufacturerValidate = manufacturerDAO.findByName(newManufacturer.getName());
 
 		if (manufacturerValidate != null) {
-			throw new IllegalArgumentException("já existe uma fornecedor com esse nome.");
+			throw new IllegalArgumentException("já existe um Fabricante com esse nome.");
 		}
 
 		manufacturerDAO.insertManufacturer(newManufacturer);
@@ -72,7 +72,7 @@ public class ManufacturerService {
 		Manufacturer manufacturer = manufacturerDAO.findById(id);
 
 		if (manufacturer == null) {
-			throw new IllegalArgumentException("Fornecedor não encontrada para o ID: " + id);
+			throw new IllegalArgumentException("Fabricante não encontrada para o ID: " + id);
 		}
 
 		if (newData.getName() != null) {
@@ -82,11 +82,34 @@ public class ManufacturerService {
 		if (newData.getCnpj() != null) {
 			manufacturer.setCnpj(newData.getCnpj());
 		}
-		
-		if(newData.getPhone() != null){
+
+		if (newData.getPhone() != null) {
 			manufacturer.setPhone(newData.getPhone());
 		}
-		
+
 		manufacturerDAO.updateManufacturer(id, manufacturer);
+	}
+
+	public void deleteManufacturer(Long id) {
+
+		if (id == null) {
+			throw new IllegalArgumentException("O id não pode ser nulo.");
+		}
+
+		Manufacturer manufacturer = manufacturerDAO.findById(id);
+
+		if (manufacturer == null) {
+			throw new IllegalArgumentException("Fabricante não encontrada para o ID: " + id);
+		}
+
+		if (manufacturer.getActive() != true) {
+			throw new IllegalArgumentException("O fabricante ja esta inativado.");
+		}
+
+		if (!manufacturer.getProducts().isEmpty()) {
+			throw new IllegalArgumentException("Fabricante não pode ser removida pois possui produto(s) associado(s).");
+		}
+		
+		manufacturer.setActive(false);
 	}
 }
