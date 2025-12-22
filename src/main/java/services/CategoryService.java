@@ -97,4 +97,24 @@ public class CategoryService {
 
 		categoryDAO.updateCategory(id, category);
 	}
+
+	public void activateCategory(Long id) {
+
+		if (id == null) {
+			throw new IllegalArgumentException("O id não pode ser nulo.");
+		}
+
+		Category category = categoryDAO.findById(id);
+
+		if (category == null) {
+			throw new IllegalArgumentException("Categoria não encontrada para o ID: " + id);
+		}
+
+		if (category.getActive()) {
+			throw new IllegalArgumentException("A categoria já está ativa.");
+		}
+
+		category.setActive(true);
+		categoryDAO.updateCategory(id, category);
+	}
 }
