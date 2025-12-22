@@ -126,7 +126,7 @@ public class ManufacturerService {
 			throw new IllegalArgumentException("O Fabricante não foi encontrado para o ID: " + id);
 		}
 
-		if (manufacturer.getActive() != false) {
+		if (manufacturer.getActive()) {
 			throw new IllegalArgumentException("O fabricante já esta ativo.");
 		}
 
