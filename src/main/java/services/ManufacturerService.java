@@ -109,8 +109,28 @@ public class ManufacturerService {
 		if (!manufacturer.getProducts().isEmpty()) {
 			throw new IllegalArgumentException("Fabricante não pode ser removida pois possui produto(s) associado(s).");
 		}
-		
+
 		manufacturer.setActive(false);
+		manufacturerDAO.updateManufacturer(id, manufacturer);
+	}
+
+	public void activateManufacturer(Long id) {
+
+		if (id == null) {
+			throw new IllegalArgumentException("O id não pode ser nulo.");
+		}
+
+		Manufacturer manufacturer = manufacturerDAO.findById(id);
+
+		if (manufacturer == null) {
+			throw new IllegalArgumentException("O Fabricante não foi encontrado para o ID: " + id);
+		}
+
+		if (manufacturer.getActive() != false) {
+			throw new IllegalArgumentException("O fabricante já esta ativo.");
+		}
+
+		manufacturer.setActive(true);
 		manufacturerDAO.updateManufacturer(id, manufacturer);
 	}
 }
