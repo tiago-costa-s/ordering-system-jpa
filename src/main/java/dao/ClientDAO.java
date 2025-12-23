@@ -28,7 +28,7 @@ public class ClientDAO {
 	}
 
 	// ----------------- READ -----------------
-	public Client findClient(Long id) {
+	public Client findById(Long id) {
 		EntityManager em = JPAUtil.getEntityManager();
 		Client client = null;
 
@@ -42,7 +42,7 @@ public class ClientDAO {
 		return client;
 	}
 
-	public List<Client> findClients() {
+	public List<Client> findAll() {
 		EntityManager em = JPAUtil.getEntityManager();
 		List<Client> clientList = null;
 
