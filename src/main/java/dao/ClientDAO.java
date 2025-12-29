@@ -4,6 +4,7 @@ import java.util.List;
 
 import entities.Client;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import util.JPAUtil;
 
 public class ClientDAO {
@@ -55,6 +56,22 @@ public class ClientDAO {
 		}
 
 		return clientList;
+	}
+
+	public Client findByName(String name) {
+		EntityManager em = JPAUtil.getEntityManager();
+		Client client = null;
+
+		try {
+			client = em.createQuery("SELECT c FROM Client c WHERE c.name = :name ", Client.class)
+					.setParameter("name", name).getSingleResult();
+
+		} catch (NoResultException e) {
+			client = null;
+		} finally {
+			em.close();
+		}
+		return client;
 	}
 
 	// ----------------- UPDATE -----------------
