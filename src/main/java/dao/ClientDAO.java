@@ -76,6 +76,21 @@ public class ClientDAO {
 		return client;
 	}
 
+	public Client findByPhone(String phone) {
+		EntityManager em = JPAUtil.getEntityManager();
+		Client client = null;
+
+		try {
+			client = em.createQuery("SELECT c FROM Client c WHERE c.phone = :phone", Client.class)
+					.setParameter("phone", phone).getSingleResult();
+		} catch (NoResultException e) {
+			client = null;
+		} finally {
+			em.close();
+		}
+		return client;
+	}
+
 	public Client findByEmail(String email) {
 		EntityManager em = JPAUtil.getEntityManager();
 		Client client = null;
