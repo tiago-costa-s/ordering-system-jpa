@@ -2,6 +2,8 @@ package dao;
 
 import java.util.List;
 
+import javax.swing.JApplet;
+
 import entities.Client;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
@@ -66,6 +68,21 @@ public class ClientDAO {
 			client = em.createQuery("SELECT c FROM Client c WHERE c.name = :name ", Client.class)
 					.setParameter("name", name).getSingleResult();
 
+		} catch (NoResultException e) {
+			client = null;
+		} finally {
+			em.close();
+		}
+		return client;
+	}
+
+	public Client findByEmail(String email) {
+		EntityManager em = JPAUtil.getEntityManager();
+		Client client = null;
+
+		try {
+			client = em.createQuery("SELECT c FROM Client c WHERE c.email = :email", Client.class)
+					.setParameter("email", email).getSingleResult();
 		} catch (NoResultException e) {
 			client = null;
 		} finally {
