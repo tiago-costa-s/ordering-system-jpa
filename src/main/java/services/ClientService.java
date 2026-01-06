@@ -1,5 +1,7 @@
 package services;
 
+import java.util.List;
+
 import dao.ClientDAO;
 import entities.Client;
 
@@ -35,5 +37,12 @@ public class ClientService {
 		}
 
 		return client;
+	}
+
+	public List<Client> findAllClients() {
+
+		List<Client> listClients = clientDAO.findAll();
+
+		return listClients;
 	}
 }
