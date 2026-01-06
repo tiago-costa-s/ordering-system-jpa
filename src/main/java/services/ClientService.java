@@ -7,7 +7,7 @@ public class ClientService {
 
 	private final ClientDAO clientDAO = new ClientDAO();
 
-	public void createCliente(Client newClient) {
+	public void createClient(Client newClient) {
 
 		if (newClient == null) {
 			throw new IllegalArgumentException("Cliente não pode ser nulo.");
@@ -20,5 +20,18 @@ public class ClientService {
 		}
 
 		clientDAO.insertClient(newClient);
+	}
+
+	public Client findClientById(Long id) {
+
+		if (id == null) {
+			throw new IllegalArgumentException("Cliente não encontrado para o ID: " + id);
+		}
+
+		Client validateId = clientDAO.findById(id);
+
+		if (validateId == null) {
+			throw new IllegalArgumentException("Cliente não encontrado para o ID: " + id);
+		}
 	}
 }
