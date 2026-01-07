@@ -70,19 +70,15 @@ public class ClientDAO {
 		}
 	}
 
-	public Client findByPhone(String phone) {
+	public List<Client> findByPhone(String phone) {
 		EntityManager em = JPAUtil.getEntityManager();
-		Client client = null;
 
 		try {
-			client = em.createQuery("SELECT c FROM Client c WHERE c.phone = :phone", Client.class)
-					.setParameter("phone", phone).getSingleResult();
-		} catch (NoResultException e) {
-			client = null;
+			return em.createQuery("SELECT c FROM Client c WHERE c.phone = :phone", Client.class)
+					.setParameter("phone", phone).getResultList();
 		} finally {
 			em.close();
 		}
-		return client;
 	}
 
 	public Client findByEmail(String email) {
