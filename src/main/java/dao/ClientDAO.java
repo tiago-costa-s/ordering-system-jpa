@@ -60,20 +60,14 @@ public class ClientDAO {
 		return clientList;
 	}
 
-	public Client findByName(String name) {
+	public List<Client> findByName(String name) {
 		EntityManager em = JPAUtil.getEntityManager();
-		Client client = null;
-
 		try {
-			client = em.createQuery("SELECT c FROM Client c WHERE c.name = :name ", Client.class)
-					.setParameter("name", name).getSingleResult();
-
-		} catch (NoResultException e) {
-			client = null;
+			return em.createQuery("SELECT c FROM Client c WHERE c.name = :name ", Client.class)
+					.setParameter("name", name).getResultList();
 		} finally {
 			em.close();
 		}
-		return client;
 	}
 
 	public Client findByPhone(String phone) {

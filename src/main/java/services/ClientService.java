@@ -45,4 +45,19 @@ public class ClientService {
 
 		return listClients;
 	}
+
+	public List<Client> findClientByName(String name) {
+
+		if (name == null || name.trim().isBlank()) {
+			throw new IllegalArgumentException("O nome não pode ser nulo.");
+		}
+
+		List<Client> listClients = clientDAO.findByName(name);
+
+		if (listClients == null) {
+			throw new IllegalArgumentException("Client não encontrado para o nome informado.");
+		}
+
+		return listClients;
+	}
 }
