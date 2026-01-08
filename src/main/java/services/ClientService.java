@@ -60,4 +60,19 @@ public class ClientService {
 
 		return listClients;
 	}
+
+	public List<Client> findClientByPhone(String phone) {
+
+		if (phone == null || phone.trim().isBlank()) {
+			throw new IllegalArgumentException("O telefone não pode ser nulo.");
+		}
+
+		List<Client> listClients = clientDAO.findByPhone(phone);
+
+		if (listClients.isEmpty()) {
+			throw new IllegalArgumentException("Cliente não encontrado para o telefone informado.");
+		}
+
+		return listClients;
+	}
 }
