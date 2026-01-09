@@ -33,16 +33,12 @@ public class ClientDAO {
 	// ----------------- READ -----------------
 	public Client findById(Long id) {
 		EntityManager em = JPAUtil.getEntityManager();
-		Client client = null;
 
 		try {
-			client = em.find(Client.class, id);
-		} catch (Exception e) {
-			System.out.println("Erro ao buscar o cliente: com ID: " + id + ": " + e.getMessage());
+			return em.find(Client.class, id);
 		} finally {
 			em.close();
 		}
-		return client;
 	}
 
 	public List<Client> findAll() {
@@ -83,9 +79,13 @@ public class ClientDAO {
 
 	public Client findByEmail(String email) {
 		EntityManager em = JPAUtil.getEntityManager();
+
 		try {
 			return em.createQuery("SELECT c FROM Client c WHERE c.email = :email", Client.class)
 					.setParameter("email", email).getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+
 		} finally {
 			em.close();
 		}
