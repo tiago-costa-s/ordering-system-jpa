@@ -4,6 +4,7 @@ import java.util.List;
 
 import dao.ClientDAO;
 import entities.Client;
+import jakarta.persistence.EntityNotFoundException;
 
 public class ClientService {
 
@@ -74,5 +75,47 @@ public class ClientService {
 		}
 
 		return listClients;
+	}
+
+	public void updateClient(Long id, Client newData) {
+
+		if (id == null) {
+			throw new IllegalArgumentException("O id não pode ser nulo.");
+		}
+
+		if (newData == null) {
+			throw new IllegalArgumentException("Dados para atualização não podem ser nulos.");
+		}
+
+		Client client = clientDAO.findById(id);
+
+		if (client == null) {
+			throw new EntityNotFoundException("Não foi localizado cliente para o ID: " + id);
+		}
+
+		if (client.getActive() != true) {
+			throw new IllegalArgumentException("Cliente inativo não pode ser atualizado.");
+		}
+
+		if (newData.getName() != null) {
+			client.setName(newData.getName());
+		}
+
+		if (newData.getPhone() != null) {
+			client.setPhone(newData.getPhone());
+		}
+
+		if (newData.getEmail() != null) {
+
+			Client clientWithSameEmail = clientDAO.findByEmail(newData.getEmail());
+
+			if (clientWithSameEmail != null && !clientWithSameEmail.getId().equals(client.getId())) {
+				throw new IllegalArgumentException("Já existe cliente cadastrado com o email informado.");
+			}
+
+			client.setEmail(newData.getEmail());
+		}
+
+		clientDAO.updateClient(id, client);
 	}
 }
