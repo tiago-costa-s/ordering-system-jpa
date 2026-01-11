@@ -85,7 +85,6 @@ public class ClientDAO {
 					.setParameter("email", email).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
-
 		} finally {
 			em.close();
 		}
