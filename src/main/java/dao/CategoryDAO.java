@@ -48,14 +48,10 @@ public class CategoryDAO {
 		List<Category> categoryList = null;
 
 		try {
-			categoryList = em.createQuery("SELECT c FROM Category c", Category.class).getResultList();
-		} catch (Exception e) {
-			System.out.println("Erro ao buscar categorias: " + e.getMessage());
+			return em.createQuery("SELECT c FROM Category c", Category.class).getResultList();
 		} finally {
 			em.close();
 		}
-
-		return categoryList;
 	}
 
 	public Category findByName(String name) {
