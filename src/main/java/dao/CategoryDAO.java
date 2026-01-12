@@ -45,7 +45,6 @@ public class CategoryDAO {
 	public List<Category> findAll() {
 
 		EntityManager em = JPAUtil.getEntityManager();
-		List<Category> categoryList = null;
 
 		try {
 			return em.createQuery("SELECT c FROM Category c", Category.class).getResultList();
@@ -54,23 +53,16 @@ public class CategoryDAO {
 		}
 	}
 
-	public Category findByName(String name) {
+	public List<Category> findByName(String name) {
 
 		EntityManager em = JPAUtil.getEntityManager();
-		Category category = null;
 
 		try {
-			category = em.createQuery("SELECT c FROM Category c WHERE c.name  = :name", Category.class)
-					.setParameter("name", name).getSingleResult();
-		} catch (NoResultException e) {
-			category = null;
-		} catch (Exception e) {
-			System.out.println("Erro ao buscar categoria pelo nome: " + e.getMessage());
+			return em.createQuery("SELECT c FROM Category c WHERE c.name  = :name", Category.class)
+					.setParameter("name", name).getResultList();
 		} finally {
 			em.close();
 		}
-
-		return category;
 	}
 
 	// ----------------- UPDATE -----------------
