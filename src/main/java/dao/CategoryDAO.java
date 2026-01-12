@@ -34,17 +34,12 @@ public class CategoryDAO {
 	public Category findById(Long id) {
 
 		EntityManager em = JPAUtil.getEntityManager();
-		Category category = null;
 
 		try {
-			category = em.find(Category.class, id);
-		} catch (Exception e) {
-			System.out.println("Erro ao buscar categoriaF: " + e.getMessage());
+			return em.find(Category.class, id);
 		} finally {
 			em.close();
 		}
-
-		return category;
 	}
 
 	public List<Category> findAll() {
