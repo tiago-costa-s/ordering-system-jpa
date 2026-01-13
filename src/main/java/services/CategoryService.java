@@ -98,12 +98,13 @@ public class CategoryService {
 		}
 
 		if (!category.getProducts().isEmpty()) {
-			throw new IllegalArgumentException("Categoria não pode ser removida pois possui produto(s) associado(s).");
+			throw new IllegalArgumentException(
+					"Categoria não pode ser desativada pois possui produto(s) associado(s).");
 		}
 
 		category.setActive(false);
 
-		categoryDAO.updateCategory(id, category);
+		categoryDAO.update(category);
 	}
 
 	public void activateCategory(Long id) {
