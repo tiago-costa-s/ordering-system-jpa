@@ -19,13 +19,13 @@ public class CategoryService {
 			throw new IllegalArgumentException("O nome da categoria é obrigatório.");
 		}
 
-		Category categoryValidate = categoryDAO.findByName(newCategory.getName());
+		List<Category> categoryValidate = categoryDAO.findByName(newCategory.getName());
 
-		if (categoryValidate != null) {
+		if (!categoryValidate.isEmpty()) {
 			throw new IllegalArgumentException("já existe uma categoria com esse nome.");
 		}
 
-		categoryDAO.insertCategory(newCategory);
+		categoryDAO.save(newCategory);
 	}
 
 	public Category findCategoryById(Long id) {
