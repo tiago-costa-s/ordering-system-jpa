@@ -1,6 +1,7 @@
 package services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import dao.CategoryDAO;
 import entities.Category;
@@ -67,10 +68,17 @@ public class CategoryService {
 		}
 
 		if (newData.getName() != null) {
+
+			List<Category> categoriesWithSameName = categoryDAO.findByName(newData.getName());
+
+			if (!categoriesWithSameName.isEmpty() && !categoriesWithSameName.get(0).getId().equals(category.getId())) {
+				throw new IllegalArgumentException("Já existe uma categoria com esse nome.");
+			}
+
 			category.setName(newData.getName());
 		}
 
-		categoryDAO.updateCategory(id, category);
+		categoryDAO.update(category);
 	}
 
 	public void deactiveCategory(Long id) {
