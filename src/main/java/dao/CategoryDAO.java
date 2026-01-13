@@ -9,7 +9,7 @@ import util.JPAUtil;
 
 public class CategoryDAO {
 	// ----------------- CREATE -----------------
-	public Category insertCategory(Category category) {
+	public Category save(Category category) {
 
 		EntityManager em = JPAUtil.getEntityManager();
 
@@ -17,11 +17,8 @@ public class CategoryDAO {
 			em.getTransaction().begin();
 			em.persist(category);
 			em.getTransaction().commit();
-
-			System.out.println("Categoria criada com sucesso.");
 		} catch (Exception e) {
 			em.getTransaction().rollback();
-			System.out.println("Ocorreu um erro ao criar a categoria: " + e.getMessage());
 			throw new RuntimeException(e);
 		} finally {
 			em.close();
@@ -66,34 +63,13 @@ public class CategoryDAO {
 	}
 
 	// ----------------- UPDATE -----------------
-	public Category updateCategory(Long id, Category newData) {
-
+	public void update(Category newData) {
 		EntityManager em = JPAUtil.getEntityManager();
-		Category category = null;
 
-		try {
-			em.getTransaction().begin();
-			category = em.find(Category.class, id);
-
-			if (newData.getActive() != null) {
-				category.setActive(newData.getActive());
-			}
-
-			if (newData.getName() != null) {
-				category.setName(newData.getName());
-			}
-
-			em.getTransaction().commit();
-
-			System.out.println("Categoria atualizada com sucesso.");
-
-		} catch (Exception e) {
-			em.getTransaction().rollback();
-			System.out.println("Erro ao buscar categorias: " + e.getMessage());
-		} finally {
-			em.close();
-		}
-
-		return category;
+		em.getTransaction().begin();
+		em.merge(newData);
+		em.getTransaction().commit();
+		
+		em.close();
 	}
 }
