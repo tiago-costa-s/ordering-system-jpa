@@ -22,7 +22,7 @@ public class ClientService {
 			throw new IllegalArgumentException("Existe cliente cadastrado com o e-mail informado.");
 		}
 
-		clientDAO.insertClient(newClient);
+		clientDAO.save(newClient);
 	}
 
 	public Client findClientById(Long id) {
