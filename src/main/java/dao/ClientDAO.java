@@ -86,42 +86,14 @@ public class ClientDAO {
 	}
 
 	// ----------------- UPDATE -----------------
-	public Client updateClient(Long id, Client newData) {
+	public void update(Client newData) {
+
 		EntityManager em = JPAUtil.getEntityManager();
-		Client client = null;
 
-		try {
-			em.getTransaction().begin();
-			client = em.find(Client.class, id);
-
-			if (client == null) {
-				throw new IllegalArgumentException("Cliente não informado para o ID: " + id);
-			}
-
-			if (newData.getName() != null) {
-				client.setName(newData.getName());
-			}
-
-			if (newData.getPhone() != null) {
-				client.setPhone(newData.getPhone());
-			}
-
-			if (newData.getEmail() != null) {
-				client.setEmail(newData.getEmail());
-			}
-
-			em.getTransaction().commit();
-
-			System.out.println("Cliente atualizado com sucesso.");
-
-		} catch (Exception e) {
-			em.getTransaction().rollback();
-			System.out.println("Erro ao atualizar o cliente: " + e.getMessage());
-		} finally {
-			em.close();
-		}
-
-		return client;
+		em.getTransaction().begin();
+		em.merge(newData);
+		em.getTransaction().commit();
+		em.close();
 	}
 
 	// ----------------- DELETE -----------------

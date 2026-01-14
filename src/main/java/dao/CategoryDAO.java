@@ -8,6 +8,7 @@ import jakarta.persistence.NoResultException;
 import util.JPAUtil;
 
 public class CategoryDAO {
+
 	// ----------------- CREATE -----------------
 	public Category save(Category category) {
 
@@ -64,12 +65,18 @@ public class CategoryDAO {
 
 	// ----------------- UPDATE -----------------
 	public void update(Category newData) {
+
 		EntityManager em = JPAUtil.getEntityManager();
 
-		em.getTransaction().begin();
-		em.merge(newData);
-		em.getTransaction().commit();
-		
-		em.close();
+		try {
+			em.getTransaction().begin();
+			em.merge(newData);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			em.getTransaction().rollback();
+			throw new RuntimeException(e);
+		} finally {
+			em.close();
+		}
 	}
 }
