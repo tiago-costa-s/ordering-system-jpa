@@ -12,21 +12,21 @@ import util.JPAUtil;
 public class ClientDAO {
 
 	// ----------------- CREATE -----------------
-	public Client insertClient(Client client) {
+	public Client save(Client client) {
+		
 		EntityManager em = JPAUtil.getEntityManager();
 
 		try {
 			em.getTransaction().begin();
 			em.persist(client);
 			em.getTransaction().commit();
-			System.out.println("Cliente criado com sucesso!");
 		} catch (Exception e) {
 			em.getTransaction().rollback();
-			System.out.println("Erro ao criar cliente: " + e.getMessage());
 			throw new RuntimeException(e);
 		} finally {
 			em.close();
 		}
+		
 		return client;
 	}
 

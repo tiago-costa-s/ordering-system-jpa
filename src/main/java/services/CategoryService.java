@@ -124,6 +124,6 @@ public class CategoryService {
 		}
 
 		category.setActive(true);
-		categoryDAO.updateCategory(id, category);
+		categoryDAO.update(category);
 	}
 }
