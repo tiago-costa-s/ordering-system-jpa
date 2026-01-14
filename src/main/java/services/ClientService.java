@@ -116,6 +116,6 @@ public class ClientService {
 			client.setEmail(newData.getEmail());
 		}
 
-		clientDAO.updateClient(id, client);
+		clientDAO.update(client);
 	}
 }
