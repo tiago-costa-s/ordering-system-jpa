@@ -13,7 +13,7 @@ public class ClientDAO {
 
 	// ----------------- CREATE -----------------
 	public Client save(Client client) {
-		
+
 		EntityManager em = JPAUtil.getEntityManager();
 
 		try {
@@ -26,7 +26,7 @@ public class ClientDAO {
 		} finally {
 			em.close();
 		}
-		
+
 		return client;
 	}
 
@@ -43,17 +43,12 @@ public class ClientDAO {
 
 	public List<Client> findAll() {
 		EntityManager em = JPAUtil.getEntityManager();
-		List<Client> clientList = null;
 
 		try {
-			clientList = em.createQuery("SELECT c FROM Client c", Client.class).getResultList();
-		} catch (Exception e) {
-			System.out.println("Erro ao buscar clientes:" + e.getMessage());
+			return em.createQuery("SELECT c FROM Client c", Client.class).getResultList();
 		} finally {
 			em.close();
 		}
-
-		return clientList;
 	}
 
 	public List<Client> findByName(String name) {
