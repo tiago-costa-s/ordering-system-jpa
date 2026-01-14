@@ -90,10 +90,15 @@ public class ClientDAO {
 
 		EntityManager em = JPAUtil.getEntityManager();
 
-		em.getTransaction().begin();
-		em.merge(newData);
-		em.getTransaction().commit();
-		em.close();
+		try {
+			em.getTransaction().begin();
+			em.merge(newData);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		} finally {
+			em.close();
+		}
 	}
 
 	// ----------------- DELETE -----------------
