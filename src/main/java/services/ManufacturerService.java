@@ -46,10 +46,7 @@ public class ManufacturerService {
 	}
 
 	public List<Manufacturer> findAllManufacturers() {
-
-		List<Manufacturer> manufacturers = manufacturerDAO.findAll();
-
-		return manufacturers;
+		return manufacturerDAO.findAll();
 	}
 
 	public Manufacturer findManufacturerByName(String name) {
