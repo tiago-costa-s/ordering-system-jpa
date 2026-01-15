@@ -52,20 +52,15 @@ public class ManufacturerDAO {
 	public Manufacturer findByName(String name) {
 
 		EntityManager em = JPAUtil.getEntityManager();
-		Manufacturer manufacturer = null;
 
 		try {
-			manufacturer = em.createQuery("SELECT m FROM manufacturer m WHERE m.name = :name", Manufacturer.class)
+			return em.createQuery("SELECT m FROM Manufacturer m WHERE m.name = :name", Manufacturer.class)
 					.setParameter("name", name).getSingleResult();
 		} catch (NoResultException e) {
-			manufacturer = null;
-		} catch (Exception e) {
-			System.out.println("Erro ao buscar fabricante pelo nome: " + e.getMessage());
+			return null;
 		} finally {
 			em.close();
 		}
-
-		return manufacturer;
 	}
 
 // ----------------- UPDATE -----------------
