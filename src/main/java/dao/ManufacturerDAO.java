@@ -28,23 +28,14 @@ public class ManufacturerDAO {
 
 // ----------------- READ -------------------
 	public Manufacturer findById(Long id) {
-		EntityManager em = JPAUtil.getEntityManager();
-		Manufacturer manufacturer = null;
 
-		if (id == null) {
-			throw new IllegalArgumentException("Fornecerdor não encontrado para o id associado.");
-		}
+		EntityManager em = JPAUtil.getEntityManager();
 
 		try {
-			manufacturer = em.find(Manufacturer.class, id);
-			System.out.println("" + manufacturer);
-		} catch (Exception e) {
-			System.out.println("Ocorreu um erro ao buscar o forncedor: " + e.getMessage());
+			return em.find(Manufacturer.class, id);
 		} finally {
 			em.close();
 		}
-
-		return manufacturer;
 	}
 
 	public List<Manufacturer> findAll() {

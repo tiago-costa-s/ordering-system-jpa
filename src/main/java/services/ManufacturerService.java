@@ -28,7 +28,8 @@ public class ManufacturerService {
 		manufacturerDAO.insertManufacturer(newManufacturer);
 	}
 
-	public Manufacturer findManufacturerById(Long id) {
+	// ----------------- READ -------------------
+	public Manufacturer findById(Long id) {
 
 		if (id == null) {
 			throw new IllegalArgumentException("O id do faricante não pode ser nulo");
