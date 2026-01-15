@@ -39,18 +39,14 @@ public class ProductDAO {
 	}
 
 	public List<Product> findAll() {
+
 		EntityManager em = JPAUtil.getEntityManager();
-		List<Product> productsList = null;
 
 		try {
-			productsList = em.createQuery("SELECT p FROM Product p", Product.class).getResultList();
-
-		} catch (Exception e) {
-			System.out.println("Erro ao buscar produtos: " + e.getMessage());
+			return em.createQuery("SELECT p FROM Product p", Product.class).getResultList();
 		} finally {
 			em.close();
 		}
-		return productsList;
 	}
 
 	// ----------------- UPDATE -----------------
