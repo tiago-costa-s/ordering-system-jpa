@@ -28,28 +28,14 @@ public class ProductDAO {
 
 	// ----------------- READ -----------------
 	public Product findById(Long id) {
+
 		EntityManager em = JPAUtil.getEntityManager();
-		Product product = null;
 
 		try {
-			if (id == null) {
-				throw new IllegalArgumentException("o id não pode ser nulo.");
-			}
-
-			product = em.find(Product.class, id);
-
-			if (product == null) {
-				System.out.println("Produto não encotnrado para o ID: " + id);
-			}
-
-		} catch (Exception e) {
-			System.out.println("Erro ao buscar o produto: " + e.getMessage());
-
+			return em.find(Product.class, id);
 		} finally {
 			em.close();
 		}
-
-		return product;
 	}
 
 	public List<Product> findAll() {
