@@ -4,6 +4,7 @@ import java.util.List;
 
 import dao.ManufacturerDAO;
 import entities.Manufacturer;
+import jakarta.persistence.EntityNotFoundException;
 
 public class ManufacturerService {
 
@@ -32,13 +33,13 @@ public class ManufacturerService {
 	public Manufacturer findById(Long id) {
 
 		if (id == null) {
-			throw new IllegalArgumentException("O id do faricante não pode ser nulo");
+			throw new IllegalArgumentException("O id do fabricante não pode ser nulo.");
 		}
 
 		Manufacturer manufacturer = manufacturerDAO.findById(id);
 
 		if (manufacturer == null) {
-			throw new IllegalArgumentException("Fabricante não enncontrado para o ID: " + id);
+			throw new IllegalArgumentException("Fabricante não encontrado para o ID: " + id);
 		}
 
 		return manufacturer;
