@@ -39,20 +39,14 @@ public class ManufacturerDAO {
 	}
 
 	public List<Manufacturer> findAll() {
+
 		EntityManager em = JPAUtil.getEntityManager();
-		List<Manufacturer> manufacturerList = null;
 
 		try {
-			manufacturerList = em.createQuery("SELECT m FROM Manufacturer m", Manufacturer.class).getResultList();
-
-		} catch (Exception e) {
-			System.out.println("Ocorreu um erro ao buscar os forncedores: " + e.getMessage());
-
+			return em.createQuery("SELECT m FROM Manufacturer m", Manufacturer.class).getResultList();
 		} finally {
 			em.close();
 		}
-
-		return manufacturerList;
 	}
 
 	public Manufacturer findByName(String name) {
