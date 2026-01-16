@@ -9,18 +9,18 @@ import util.JPAUtil;
 public class ProductDAO {
 
 	// ----------------- CREATE -----------------
-	public void insertProduct(Product product) {
+	public void save(Product product) {
+
 		EntityManager em = JPAUtil.getEntityManager();
 
 		try {
 			em.getTransaction().begin();
 			em.persist(product);
 			em.getTransaction().commit();
-			System.out.println("O produto foi criado com sucesso.");
 
 		} catch (Exception e) {
 			em.getTransaction().rollback();
-			System.out.println("Erro ao criar o produto: " + e.getMessage());
+			throw new RuntimeException(e);
 		} finally {
 			em.close();
 		}
