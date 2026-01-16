@@ -64,44 +64,17 @@ public class ManufacturerDAO {
 	}
 
 // ----------------- UPDATE -----------------
-	public void updateManufacturer(Long id, Manufacturer newData) {
+	public void update(Manufacturer newData) {
+
 		EntityManager em = JPAUtil.getEntityManager();
-		Manufacturer manufacturer = null;
-
-		if (id == null) {
-			throw new IllegalArgumentException("O ID não pode estar vazio.");
-		}
-
-		if (newData == null) {
-			throw new IllegalArgumentException("Forncedor não pode estar vazio.");
-		}
 
 		try {
 			em.getTransaction().begin();
-			manufacturer = em.find(Manufacturer.class, id);
-
-			if (manufacturer == null) {
-				throw new IllegalArgumentException("Fornecerdor não encontrado para o ID " + id);
-			}
-
-			if (newData.getName() != null) {
-				manufacturer.setName(newData.getName());
-			}
-
-			if (newData.getCnpj() != null) {
-				manufacturer.setCnpj(newData.getCnpj());
-			}
-
-			if (newData.getPhone() != null) {
-				manufacturer.setPhone(newData.getPhone());
-			}
-
+			em.merge(newData);
 			em.getTransaction().commit();
-			System.out.println("Fornercedor atualizado com sucesso.");
-
 		} catch (Exception e) {
 			em.getTransaction().rollback();
-			System.out.println("Ocorreu um erro ao tentar atualizar o fornecedor: " + e.getLocalizedMessage());
+			throw new RuntimeException(e);
 		} finally {
 			em.close();
 		}
