@@ -10,17 +10,17 @@ import util.JPAUtil;
 public class ManufacturerDAO {
 
 	// ----------------- CREATE -----------------
-	public void insertManufacturer(Manufacturer manufacturer) {
+	public void save(Manufacturer manufacturer) {
+
 		EntityManager em = JPAUtil.getEntityManager();
 
 		try {
 			em.getTransaction().begin();
 			em.persist(manufacturer);
 			em.getTransaction().commit();
-			System.out.println("Fornecedor criado com sucesso.");
 		} catch (Exception e) {
 			em.getTransaction().rollback();
-			System.out.println("Erro ao criar fornceedor: " + e.getMessage());
+			throw new RuntimeException(e);
 		} finally {
 			em.close();
 		}
