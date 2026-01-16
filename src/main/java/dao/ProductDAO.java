@@ -50,49 +50,17 @@ public class ProductDAO {
 	}
 
 	// ----------------- UPDATE -----------------
-	public void updateProduct(Long id, Product updatedProduct) {
+	public void update(Product newDate) {
+
 		EntityManager em = JPAUtil.getEntityManager();
 
 		try {
-
-			if (id == null) {
-				throw new IllegalArgumentException("O ID não pode ser nulo.");
-			}
-
 			em.getTransaction().begin();
-
-			Product product = em.find(Product.class, id);
-
-			if (product == null) {
-				throw new IllegalArgumentException("Produto não encontrado para o ID: " + id);
-			}
-
-			if (updatedProduct == null) {
-				throw new IllegalArgumentException("Os dados do produto não foram informados.");
-			}
-
-			if (updatedProduct.getName() != null) {
-				product.setName(updatedProduct.getName());
-			}
-
-			if (updatedProduct.getPrice() != null) {
-				product.setPrice(updatedProduct.getPrice());
-			}
-
-			if (updatedProduct.getStock() != null) {
-				product.setStock(updatedProduct.getStock());
-			}
-
-			if (updatedProduct.getDescription() != null) {
-				product.setDescription(updatedProduct.getDescription());
-			}
-
+			em.merge(newDate);
 			em.getTransaction().commit();
-			System.out.println("Produto atualizado com sucesso. \n" + product);
-
 		} catch (Exception e) {
 			em.getTransaction().rollback();
-			System.out.println("Erro ao atualizar o produto com o id: " + id + " - " + e.getMessage());
+			throw new RuntimeException(e);
 		} finally {
 			em.close();
 		}
