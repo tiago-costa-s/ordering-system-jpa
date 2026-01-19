@@ -4,6 +4,7 @@ import java.util.List;
 
 import entities.Manufacturer;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
 import util.JPAUtil;
 
@@ -80,22 +81,26 @@ public class ManufacturerDAO {
 		}
 	}
 
-// ----------------- DELETE -----------------
-	public void deleteManufacturer(Long id) {
+// ----------------- DISABLE -----------------
+	public void deactivate(Long id) {
 		EntityManager em = JPAUtil.getEntityManager();
-		Manufacturer manufacturer = null;
 
 		try {
 			em.getTransaction().begin();
-			manufacturer = em.find(Manufacturer.class, id);
-			em.remove(manufacturer);
+
+			Manufacturer manufacturer = em.find(Manufacturer.class, id);
+
+			if (manufacturer == null) {
+				throw new EntityNotFoundException("Manufacturer not found for id: " + id);
+			}
+
+			manufacturer.setActive(false);
+			em.merge(manufacturer);
+
 			em.getTransaction().commit();
-
-			System.out.println("Fornercedor deletado com sucesso.");
-
 		} catch (Exception e) {
 			em.getTransaction().rollback();
-			System.out.println("Erro ao deletar o fornercedor: " + e.getMessage());
+			throw new RuntimeException(e);
 		} finally {
 			em.close();
 		}
