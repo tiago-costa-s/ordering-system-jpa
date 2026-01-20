@@ -59,35 +59,35 @@ public class ManufacturerService {
 		return manufacturerDAO.findByName(name);
 	}
 
-	public void updateManufacturer(Long id, Manufacturer newData) {
+	public void updateManufacturer(Long id, Manufacturer manufacturer) {
 
 		if (id == null) {
 			throw new IllegalArgumentException("O id não pode ser nulo.");
 		}
 
-		if (newData == null) {
+		if (manufacturer == null) {
 			throw new IllegalArgumentException("Dados para atualização não podem ser nulos.");
 		}
 
-		Manufacturer manufacturer = manufacturerDAO.findById(id);
+		Manufacturer manufacturerFromDb = manufacturerDAO.findById(id);
 
-		if (manufacturer == null) {
-			throw new IllegalArgumentException("Fabricante não encontrada para o ID: " + id);
+		if (manufacturerFromDb == null) {
+			throw new DomainException("Fabricante não encontrado para o ID: " + id);
 		}
 
-		if (newData.getName() != null) {
-			manufacturer.setName(newData.getName());
+		if (manufacturer.getName() != null) {
+			manufacturerFromDb.setName(manufacturer.getName());
 		}
 
-		if (newData.getCnpj() != null) {
-			manufacturer.setCnpj(newData.getCnpj());
+		if (manufacturer.getCnpj() != null) {
+			manufacturerFromDb.setCnpj(manufacturer.getCnpj());
 		}
 
-		if (newData.getPhone() != null) {
-			manufacturer.setPhone(newData.getPhone());
+		if (manufacturer.getPhone() != null) {
+			manufacturerFromDb.setPhone(manufacturer.getPhone());
 		}
 
-		manufacturerDAO.updateManufacturer(id, manufacturer);
+		manufacturerDAO.update(manufacturerFromDb);
 	}
 
 	public void deactivateManufacturer(Long id) {
@@ -123,11 +123,11 @@ public class ManufacturerService {
 		Manufacturer manufacturer = manufacturerDAO.findById(id);
 
 		if (manufacturer == null) {
-			throw new IllegalArgumentException("O Fabricante não foi encontrado para o ID: " + id);
+			throw new DomainException("Fabricante não foi encontrado para o ID: " + id);
 		}
 
 		if (manufacturer.getActive()) {
-			throw new IllegalArgumentException("O fabricante já esta ativo.");
+			throw new DomainException("Fabricante já esta ativo.");
 		}
 
 		manufacturer.setActive(true);
