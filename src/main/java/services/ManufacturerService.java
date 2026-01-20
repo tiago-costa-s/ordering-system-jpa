@@ -18,16 +18,16 @@ public class ManufacturerService {
 		}
 
 		if (newManufacturer.getName() == null || newManufacturer.getName().trim().isEmpty()) {
-			throw new IllegalArgumentException("O nome da fabricante é obrigatório.");
+			throw new DomainException("O nome da fabricante é obrigatório.");
 		}
 
 		Manufacturer manufacturerValidate = manufacturerDAO.findByName(newManufacturer.getName());
 
 		if (manufacturerValidate != null) {
-			throw new IllegalArgumentException("já existe um Fabricante com esse nome.");
+			throw new DomainException("já existe um Fabricante com esse nome.");
 		}
 
-		manufacturerDAO.insertManufacturer(newManufacturer);
+		manufacturerDAO.save(newManufacturer);
 	}
 
 	// ----------------- READ -------------------
