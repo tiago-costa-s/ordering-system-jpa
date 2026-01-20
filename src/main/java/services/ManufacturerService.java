@@ -131,6 +131,6 @@ public class ManufacturerService {
 		}
 
 		manufacturer.setActive(true);
-		manufacturerDAO.updateManufacturer(id, manufacturer);
+		manufacturerDAO.update(manufacturer);
 	}
 }
