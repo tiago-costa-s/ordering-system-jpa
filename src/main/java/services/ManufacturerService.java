@@ -4,6 +4,7 @@ import java.util.List;
 
 import dao.ManufacturerDAO;
 import entities.Manufacturer;
+import exceptions.DomainException;
 import jakarta.persistence.EntityNotFoundException;
 
 public class ManufacturerService {
@@ -89,7 +90,7 @@ public class ManufacturerService {
 		manufacturerDAO.updateManufacturer(id, manufacturer);
 	}
 
-	public void deactiveManufacturer(Long id) {
+	public void deactivateManufacturer(Long id) {
 
 		if (id == null) {
 			throw new IllegalArgumentException("O id não pode ser nulo.");
@@ -98,19 +99,19 @@ public class ManufacturerService {
 		Manufacturer manufacturer = manufacturerDAO.findById(id);
 
 		if (manufacturer == null) {
-			throw new IllegalArgumentException("Fabricante não encontrada para o ID: " + id);
+			throw new DomainException("Fabricante não encontrado para o ID: " + id);
 		}
 
-		if (manufacturer.getActive() != true) {
-			throw new IllegalArgumentException("O fabricante ja esta inativado.");
+		if (!manufacturer.getActive()) {
+			throw new DomainException("O fabricante ja esta inativado.");
 		}
 
 		if (!manufacturer.getProducts().isEmpty()) {
-			throw new IllegalArgumentException("Fabricante não pode ser removida pois possui produto(s) associado(s).");
+			throw new DomainException("Fabricante não pode ser desativado pois possui produto(s) associado(s).");
 		}
 
 		manufacturer.setActive(false);
-		manufacturerDAO.updateManufacturer(id, manufacturer);
+		manufacturerDAO.update(manufacturer);
 	}
 
 	public void activateManufacturer(Long id) {
