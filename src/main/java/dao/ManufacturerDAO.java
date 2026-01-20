@@ -65,38 +65,12 @@ public class ManufacturerDAO {
 	}
 
 // ----------------- UPDATE -----------------
-	public void update(Manufacturer newData) {
-
+	public void update(Manufacturer manufacturer) {
 		EntityManager em = JPAUtil.getEntityManager();
 
 		try {
 			em.getTransaction().begin();
-			em.merge(newData);
-			em.getTransaction().commit();
-		} catch (Exception e) {
-			em.getTransaction().rollback();
-			throw new RuntimeException(e);
-		} finally {
-			em.close();
-		}
-	}
-
-// ----------------- DISABLE -----------------
-	public void deactivate(Long id) {
-		EntityManager em = JPAUtil.getEntityManager();
-
-		try {
-			em.getTransaction().begin();
-
-			Manufacturer manufacturer = em.find(Manufacturer.class, id);
-
-			if (manufacturer == null) {
-				throw new EntityNotFoundException("Manufacturer not found for id: " + id);
-			}
-
-			manufacturer.setActive(false);
 			em.merge(manufacturer);
-
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			em.getTransaction().rollback();
@@ -105,4 +79,6 @@ public class ManufacturerDAO {
 			em.close();
 		}
 	}
+
+
 }
