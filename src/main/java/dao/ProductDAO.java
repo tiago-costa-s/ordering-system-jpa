@@ -50,13 +50,13 @@ public class ProductDAO {
 	}
 
 	// ----------------- UPDATE -----------------
-	public void update(Product newDate) {
+	public void update(Product product) {
 
 		EntityManager em = JPAUtil.getEntityManager();
 
 		try {
 			em.getTransaction().begin();
-			em.merge(newDate);
+			em.merge(product);
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			em.getTransaction().rollback();
@@ -64,32 +64,5 @@ public class ProductDAO {
 		} finally {
 			em.close();
 		}
-	}
-
-	// ----------------- DELETE -----------------
-	public void deleteProduct(Long id) {
-		EntityManager em = JPAUtil.getEntityManager();
-
-		if (id == null) {
-			throw new IllegalArgumentException("O ID não poder nulo.");
-		}
-
-		try {
-			Product product = em.find(Product.class, id);
-
-			if (product == null) {
-				throw new IllegalArgumentException("Produto não encontrado para o ID: " + id);
-			}
-
-			em.getTransaction().begin();
-			em.remove(product);
-			em.getTransaction().commit();
-			System.out.println("Produto removido com sucesso.");
-
-		} catch (Exception e) {
-			System.out.println("Erro ao remover o produto" + e.getMessage());
-		} finally {
-			em.close();
-		}
-	}
+	}	
 }
