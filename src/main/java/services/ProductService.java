@@ -74,7 +74,82 @@ public class ProductService {
 			throw new DomainException("A Categoria está inativa.");
 		}
 
-		product.setCategory(categoryFromDb);	
+		product.setCategory(categoryFromDb);
+
 		productDAO.save(product);
+	}
+
+	public void updateProduct(Long id, Product product) {
+
+		if (id == null) {
+			throw new DomainException("O ID não pode ser nulo.");
+		}
+
+		if (product == null) {
+			throw new DomainException("Dados para atualização não podem ser nulos.");
+		}
+
+		Product productFromDb = productDAO.findById(id);
+
+		if (productFromDb == null) {
+			throw new DomainException("Produto não encontrado para o ID: " + id);
+		}
+
+		if (!productFromDb.getActive()) {
+			throw new DomainException("O produto está inativo.");
+		}
+
+		if (product.getName() != null) {
+			productFromDb.setName(product.getName());
+		}
+
+		if (product.getPrice() != null) {
+
+			if (product.getPrice() < 0.0) {
+				throw new DomainException("O preço não pode ser negativo.");
+			}
+
+			productFromDb.setPrice(product.getPrice());
+		}
+
+		if (product.getStock() != null) {
+			productFromDb.setStock(product.getStock());
+		}
+
+		if (product.getDescription() != null) {
+			productFromDb.setDescription(product.getDescription());
+		}
+
+		if (product.getManufacturer() != null) {
+
+			Manufacturer manufacturerFromDb = manufacturerDAO.findById(product.getManufacturer().getId());
+
+			if (manufacturerFromDb == null) {
+				throw new DomainException("Fornecedor não encontrado.");
+			}
+
+			if (!manufacturerFromDb.getActive()) {
+				throw new DomainException("Fornecedor está inativo.");
+			}
+
+			productFromDb.setManufacturer(manufacturerFromDb);
+		}
+
+		if (product.getCategory() != null) {
+
+			Category categoryFromDb = categoryDAO.findById(product.getCategory().getId());
+
+			if (categoryFromDb == null) {
+				throw new DomainException("Categoria não encontrada.");
+			}
+
+			if (!categoryFromDb.getActive()) {
+				throw new DomainException("Categoria está inativa.");
+			}
+
+			productFromDb.setCategory(categoryFromDb);
+		}
+
+		productDAO.update(productFromDb);
 	}
 }
