@@ -136,8 +136,29 @@ public class ClientService {
 			throw new DomainException("Cliente já está inativo.");
 		}
 
-		clientFromDb.setActive(false);	
-		
+		clientFromDb.setActive(false);
+
+		clientDAO.update(clientFromDb);
+	}
+
+	public void activate(Long id) {
+
+		if (id == null) {
+			throw new DomainException("O id não pode ser nulo.");
+		}
+
+		Client clientFromDb = clientDAO.findById(id);
+
+		if (clientFromDb == null) {
+			throw new DomainException("Cliente não encontrado para o ID: " + id);
+		}
+
+		if (clientFromDb.getActive()) {
+			throw new DomainException("Cliente já está ativo.");
+		}
+
+		clientFromDb.setActive(true);
+
 		clientDAO.update(clientFromDb);
 	}
 }
