@@ -1,5 +1,7 @@
 package services;
 
+import java.util.List;
+
 import dao.CategoryDAO;
 import dao.ManufacturerDAO;
 import dao.ProductDAO;
@@ -92,6 +94,11 @@ public class ProductService {
 		}
 
 		return productFromDb;
+	}
+
+	public List<Product> findProductAll() {
+
+		return productDAO.findAll();
 	}
 
 	public void updateProduct(Long id, Product product) {
