@@ -180,7 +180,7 @@ public class ProductService {
 		productDAO.update(productFromDb);
 	}
 
-	public void deactivateProduct(Long id) {
+	public void deactivate(Long id) {
 
 		if (id == null) {
 			throw new DomainException("O id não pode ser nulo.");
@@ -201,7 +201,7 @@ public class ProductService {
 		productDAO.update(productFromDb);
 	}
 
-	public void activateProduct(Long id) {
+	public void activate(Long id) {
 
 		if (id == null) {
 			throw new DomainException("O id não pode ser nulo.");
