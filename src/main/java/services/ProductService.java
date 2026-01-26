@@ -200,4 +200,26 @@ public class ProductService {
 
 		productDAO.update(productFromDb);
 	}
+
+	public void activateProduct(Long id) {
+
+		if (id == null) {
+			throw new DomainException("O id não pode ser nulo.");
+		}
+
+		Product productFromDb = productDAO.findById(id);
+
+		if (productFromDb == null) {
+			throw new DomainException("Produto não encontrado para o ID: " + id);
+		}
+
+		if (productFromDb.getActive()) {
+			throw new DomainException("Produto já está ativo.");
+		}
+
+		productFromDb.setActive(true);
+		
+		productDAO.update(productFromDb);
+	}
+
 }
