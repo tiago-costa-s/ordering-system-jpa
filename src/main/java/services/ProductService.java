@@ -79,6 +79,21 @@ public class ProductService {
 		productDAO.save(product);
 	}
 
+	public Product findProductById(Long id) {
+
+		if (id == null) {
+			throw new DomainException("O id do produto não pode ser nulo.");
+		}
+
+		Product productFromDb = productDAO.findById(id);
+
+		if (productFromDb == null) {
+			throw new DomainException("Produto não encontrado para o ID: " + id);
+		}
+
+		return productFromDb;
+	}
+
 	public void updateProduct(Long id, Product product) {
 
 		if (id == null) {
@@ -113,6 +128,11 @@ public class ProductService {
 		}
 
 		if (product.getStock() != null) {
+
+			if (product.getStock() < 0) {
+				throw new DomainException("O estoque não pode ser nulo.");
+			}
+
 			productFromDb.setStock(product.getStock());
 		}
 
