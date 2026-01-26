@@ -4,6 +4,7 @@ import java.util.List;
 
 import dao.ClientDAO;
 import entities.Client;
+import exceptions.DomainException;
 import jakarta.persistence.EntityNotFoundException;
 
 public class ClientService {
@@ -117,5 +118,26 @@ public class ClientService {
 		}
 
 		clientDAO.update(client);
+	}
+
+	public void deactivate(Long id) {
+
+		if (id == null) {
+			throw new DomainException("O id não pode ser nulo.");
+		}
+
+		Client clientFromDb = clientDAO.findById(id);
+
+		if (clientFromDb == null) {
+			throw new DomainException("Cliente não encontrado para o ID: " + id);
+		}
+
+		if (!clientFromDb.getActive()) {
+			throw new DomainException("Cliente já está inativo.");
+		}
+
+		clientFromDb.setActive(false);	
+		
+		clientDAO.update(clientFromDb);
 	}
 }
