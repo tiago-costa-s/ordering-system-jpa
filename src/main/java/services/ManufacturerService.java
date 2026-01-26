@@ -90,7 +90,7 @@ public class ManufacturerService {
 		manufacturerDAO.update(manufacturerFromDb);
 	}
 
-	public void deactivateManufacturer(Long id) {
+	public void deactivate(Long id) {
 
 		if (id == null) {
 			throw new IllegalArgumentException("O id não pode ser nulo.");
@@ -114,7 +114,7 @@ public class ManufacturerService {
 		manufacturerDAO.update(manufacturer);
 	}
 
-	public void activateManufacturer(Long id) {
+	public void activate(Long id) {
 
 		if (id == null) {
 			throw new IllegalArgumentException("O id não pode ser nulo.");
