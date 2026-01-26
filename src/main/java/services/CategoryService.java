@@ -81,7 +81,7 @@ public class CategoryService {
 		categoryDAO.update(category);
 	}
 
-	public void deactiveCategory(Long id) {
+	public void deactive(Long id) {
 
 		if (id == null) {
 			throw new IllegalArgumentException("O id não pode ser nulo.");
@@ -107,7 +107,7 @@ public class CategoryService {
 		categoryDAO.update(category);
 	}
 
-	public void activateCategory(Long id) {
+	public void activate(Long id) {
 
 		if (id == null) {
 			throw new IllegalArgumentException("O id não pode ser nulo.");
