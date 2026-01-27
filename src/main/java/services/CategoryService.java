@@ -5,28 +5,31 @@ import java.util.stream.Collectors;
 
 import dao.CategoryDAO;
 import entities.Category;
+import exceptions.DomainException;
 
 public class CategoryService {
 
 	private final CategoryDAO categoryDAO = new CategoryDAO();
 
-	public void createCategory(Category newCategory) {
+	public void createCategory(Category category) {
 
-		if (newCategory == null) {
+		if (category == null) {
 			throw new IllegalArgumentException("Categoria não pode ser nula.");
 		}
 
-		if (newCategory.getName() == null || newCategory.getName().trim().isEmpty()) {
-			throw new IllegalArgumentException("O nome da categoria é obrigatório.");
+		if (category.getName() == null || category.getName().trim().isEmpty()) {
+			throw new DomainException("O nome da categoria é obrigatório.");
 		}
 
-		List<Category> categoryValidate = categoryDAO.findByName(newCategory.getName());
+		List<Category> categoryFromDb = categoryDAO.findByName(category.getName());
 
-		if (!categoryValidate.isEmpty()) {
-			throw new IllegalArgumentException("já existe uma categoria com esse nome.");
+		if (!categoryFromDb.isEmpty()) {
+			throw new DomainException("já existe uma categoria com esse nome.");
 		}
 
-		categoryDAO.save(newCategory);
+		category.setActive(true);
+
+		categoryDAO.save(category);
 	}
 
 	public Category findCategoryById(Long id) {
