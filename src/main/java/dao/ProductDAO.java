@@ -51,7 +51,7 @@ public class ProductDAO {
 
 	// ----------------- UPDATE -----------------
 	public void update(Product product) {
-
+		
 		EntityManager em = JPAUtil.getEntityManager();
 
 		try {

@@ -31,7 +31,7 @@ public class ManufacturerService {
 	}
 
 	// ----------------- READ -------------------
-	public Manufacturer findById(Long id) {
+	public Manufacturer findManufacturerById(Long id) {
 
 		if (id == null) {
 			throw new IllegalArgumentException("O id do fabricante não pode ser nulo.");

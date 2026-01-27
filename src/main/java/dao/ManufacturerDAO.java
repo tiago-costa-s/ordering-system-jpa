@@ -66,6 +66,7 @@ public class ManufacturerDAO {
 
 // ----------------- UPDATE -----------------
 	public void update(Manufacturer manufacturer) {
+		
 		EntityManager em = JPAUtil.getEntityManager();
 
 		try {
@@ -79,6 +80,4 @@ public class ManufacturerDAO {
 			em.close();
 		}
 	}
-
-
 }
