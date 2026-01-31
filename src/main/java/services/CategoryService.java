@@ -93,15 +93,17 @@ public class CategoryService {
 		Category category = categoryDAO.findById(id);
 
 		if (category == null) {
-			throw new IllegalArgumentException("Categoria não encontrada para o ID: " + id);
+			throw new DomainException("Categoria não encontrada para o ID: " + id);
 		}
 
-		if (category.getActive() != true) {
-			throw new IllegalArgumentException("Categoria ja esta inativa.");
+		if (!category.getActive()) {
+			throw new DomainException("Categoria ja esta inativa.");
 		}
 
-		if (!category.getProducts().isEmpty()) {
-			throw new IllegalArgumentException(
+		long productCount = categoryDAO.countProductsByCategoryId(id);
+
+		if (productCount > 0) {
+			throw new DomainException(
 					"Categoria não pode ser desativada pois possui produto(s) associado(s).");
 		}
 
