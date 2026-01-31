@@ -63,6 +63,22 @@ public class CategoryDAO {
 		}
 	}
 
+	public long existsProductByCategoryId(Long categoryId) {
+
+		EntityManager em = JPAUtil.getEntityManager();
+
+		try {
+			return em.createQuery(
+					"SELECT COUNT (p) FROM Product p WHERE p.category.id = :categoryId",
+					Long.class
+					)
+				.setParameter("categoryId", categoryId)
+				.getSingleResult();
+		} finally {
+			em.close();
+		}
+	}
+
 	// ----------------- UPDATE -----------------
 	public void update(Category newData) {
 
