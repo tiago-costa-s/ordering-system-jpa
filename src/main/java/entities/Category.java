@@ -30,11 +30,7 @@ public class Category {
 		super();
 		this.active = true;
 	}
-
-	public Category(String name) {
-		setName(name);
-	}
-
+	
 	public Category(Boolean active, String name) {
 		super();
 		this.active = (active != null ? active : true);
